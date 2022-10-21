@@ -1,0 +1,45 @@
+body {
+    background-color: #222;
+    color: #eee;
+}
+
+#turn-indicator {
+    margin: auto;
+    text-align: center;
+    width: fit-content;
+}
+
+#icon {
+    width: 128px;
+    height: 128px;
+    margin: 5px;
+}
+
+#container {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(3, 128px);
+    width: fit-content;
+    margin: auto;
+}
+
+#container > div {
+    width: 128px;
+    height: 128px;
+}
+
+#container > div:hover {
+    background-color: #ee2;
+}
+
+.empty {
+    background-color: #eee;
+}
+
+.circle {
+    background-color: #22e;
+}
+
+.cross {
+    background-color: #e22;
+}
