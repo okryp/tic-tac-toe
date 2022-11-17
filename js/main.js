@@ -1,5 +1,6 @@
 const tiles = document.querySelectorAll("#container > div");
 const iconTurn = document.querySelector("#icon"); 
+const turnIndicator = document.querySelector("#turn-indicator")
 const gameStartModal = document.querySelector("#game-start-modal");
 const modalParagraph = document.querySelector(".modal-content > p");
 /**
@@ -19,38 +20,32 @@ let ySum = 0;
 let xSum = 0;
 let diagonalSumUD; //UP -> DOWN
 let diagonalSumDU; //DOWN -> UP
-
-const verticalCheckSum = () => {
+const checkSums = () => {
+	// Checks for potential vertical victories
 	for (let j = 0; j < 3; j++) {
 		ySum = 0;
 		for (let i = j; i < grid.length; i+=3) {
 			ySum += grid[i];
-			console.log("GRID[y]:",grid[i], i);
-			console.log("ySUM", ySum);
+			console.log("ySUM:", i, ySum);
 
 			if (ySum == 3 || ySum == -3) {
 				return ySum;
 			}
 		}	
 	}
-}
-
-const horizontalCheckSum = () => {
+	// Checks for potential horizontal victories
 	for (let j = 0; j < grid.length; j+=3) {
 		xSum = 0;
 		for (let i = j; i < j+3; i++) {
 			xSum += grid[i];
-			console.log("GRID[x]: ", grid[i], i);
-			console.log("xSUM: ", xSum);
+			console.log("xSUM: ", i, xSum);
 
 			if (xSum == 3 || xSum == -3) {
 				return xSum;
 			}
 		}
 	}
-}
-
-const diagonalCheckSum = () => {
+	// Checks for potential diagonal vicotories
 	diagonalSumUD = (grid[0] + grid[4] + grid[8]) //UP -> DOWN
 	diagonalSumDU = (grid[6] + grid[4] + grid[2]) //DOWN -> UP
 	if (diagonalSumDU == 3 || diagonalSumUD == 3) {
@@ -77,10 +72,9 @@ const updateGrid = () => {
 	console.log("Current grid:\n", grid);
 }
 
+
 const checkVictory = () => {
-	verticalCheckSum();
-	horizontalCheckSum();
-	diagonalCheckSum();
+	checkSums();
 	if (ySum == 3 || xSum == 3 || diagonalSumUD == 3 || diagonalSumDU == 3) {
 		displayVictoryModal("CIRCLE");
 		return;
@@ -88,13 +82,10 @@ const checkVictory = () => {
 		displayVictoryModal("CROSS")
 		return;
 	}
-	
-	grid.forEach((element) => {
-		if (element != 0) {tieChecker += 1}
-	})
+	tieChecker++;
 	console.log("tiechecker: ", tieChecker)
-	if (tieChecker == 45) {
-		alert("It's a tie!");
+	if (tieChecker == 9) {
+		displayVictoryModal();
 		return;
 	}
 }
@@ -135,8 +126,9 @@ tiles.forEach((element, index) => {
 
 const displayVictoryModal = (winner) => {
 	document.querySelector("#winner-modal").style.display = "block";
-	if (tieChecker) {
+	if (tieChecker == 9) {
 		document.querySelector(".modal-content > p").innerHTML = "<h1>IT'S A TIE!</h1>"
+		return;
 	}
 	document.querySelector(".modal-content > p").innerHTML = "<h1>" + winner + " WON</h1>"
 }
@@ -147,12 +139,25 @@ const choosePlayer = (element) => {
 	if (element.target.id == "cross") {
 		icon = 1;
 	};
+	turnIndicator.style.display = "block";
 }
 
-iconTurn.classList = "circle";
+const restartGame = () => {
+	grid = [
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0
+	]
+	tiles.forEach((element) => {
+		element.classList = "empty"
+	})
+	tieChecker = 0;
+}
+
+turnIndicator.style.display = "none";
 document.querySelector(".modal-content > button").addEventListener("click", () => {
 	document.querySelector("#winner-modal").style.display = "none";
+	restartGame()
 })
-
 document.querySelector("#circle").addEventListener("click", choosePlayer);
 document.querySelector("#cross").addEventListener("click", choosePlayer);

@@ -68,18 +68,19 @@ body {
 
 }
 
-#container > div:hover {
-    background-color: #ee2;
+.empty {
+    background-color: rgba(0,0,0,0.4);
 }
 
-.empty {
-    background-color: #eee;
+.empty:hover {
+    cursor: pointer;
+    background:rgba(255, 255, 0, 0.6)
 }
 
 .circle {
-    background-color: #22e;
+    background: url(../img/circle.png);
 }
 
 .cross {
-    background-color: #e22;
+    background: url(../img/cross.png)
 }
