@@ -79,7 +79,7 @@ const checkVictory = () => {
 		displayVictoryModal("CIRCLE");
 		return;
 	} else if (ySum == -3 || xSum == -3 || diagonalSumUD == -3 || diagonalSumDU == -3) {
-		displayVictoryModal("CROSS")
+		displayVictoryModal("CROSS");
 		return;
 	}
 	tieChecker++;
@@ -98,28 +98,28 @@ tiles.forEach((element, index) => {
 		 * 	More optimisation highly possible, looking into it in the future.
 		*/
 		switch(icon) {
-		case 0:
-			if (element.classList.contains("empty") || (!element.classList.contains("cross") && !element.classList.contains("circle"))) {
-				element.classList = "circle";
-				updateGrid();
-				checkVictory();
-				iconTurn.classList = "cross";
-				icon = 1;
+			case 0:
+				if (element.classList.contains("empty") || (!element.classList.contains("cross") && !element.classList.contains("circle"))) {
+					element.classList = "circle";
+					updateGrid();
+					checkVictory();
+					iconTurn.classList = "cross";
+					icon = 1;
+				} else {
+					console.log("contains char")
+				}
 				break;
-			} else {
-				console.log("contains char")
-			}
-		case 1:
-			if (element.classList.contains("empty") || (!element.classList.contains("cross") && !element.classList.contains("circle"))) {
-				element.classList = "cross";
-				updateGrid();
-				checkVictory();
-				iconTurn.classList = "circle";
-				icon = 0;
+			case 1:
+				if (element.classList.contains("empty") || (!element.classList.contains("cross") && !element.classList.contains("circle"))) {
+					element.classList = "cross";
+					updateGrid();
+					checkVictory();
+					iconTurn.classList = "circle";
+					icon = 0;
+				} else {
+					console.log("contains char");
+				}
 				break;
-			} else {
-				console.log("contains char");
-			}
 		}
 	});
 }); 
