@@ -1,12 +1,14 @@
 const tiles = document.querySelectorAll("#container > div");
-const iconTurn = document.querySelector("#icon");
-
+const iconTurn = document.querySelector("#icon"); 
+const gameStartModal = document.querySelector("#game-start-modal");
+const modalParagraph = document.querySelector(".modal-content > p");
 /**
  * Used for the switch case.
  * Defines who's turn it is.
  */
 let icon = 0;
-let tieChecker = 0
+let tieChecker = 0;
+let winner = 0;
 let grid = [
 	0, 0, 0,
 	0, 0, 0,
@@ -80,10 +82,10 @@ const checkVictory = () => {
 	horizontalCheckSum();
 	diagonalCheckSum();
 	if (ySum == 3 || xSum == 3 || diagonalSumUD == 3 || diagonalSumDU == 3) {
-		alert("circle wins")
+		displayVictoryModal("CIRCLE");
 		return;
 	} else if (ySum == -3 || xSum == -3 || diagonalSumUD == -3 || diagonalSumDU == -3) {
-		alert("cross wins");
+		displayVictoryModal("CROSS")
 		return;
 	}
 	
@@ -131,40 +133,26 @@ tiles.forEach((element, index) => {
 	});
 }); 
 
-/**
- * Check if anyone has won by going through all possible win conditions
- * (3 horizonal, 3 vertical, 2 diagonal)
- */
-//  const checkWin = (player) => {
-// 	let playerSum = 3;
-// 	while (playerSum > -3) {
-// 		// DIAGONAL CHECK
-// 		if ((grid[0][0] + grid[1][1] + grid [2][2]) == playerSum) {
-// 			console.log(player, "wins | Top Left - Bottom Right");
-// 			return;
-// 		} else if ((grid[0][2] + grid[1][1] + grid[2][0] == playerSum)) {
-// 			console.log(player, "wins | Top Right - Bottom Left");
-// 			return;
-// 		}
-// 		// HORIZTAL && VERTICAL CHECK
-// 		for (let i = 0; i <= 2; i++) {
-// 			if (checkSum(grid[i] === playerSum)) {
-// 				console.log(player, "wins | Horizontal Line");
-// 				return;
-// 			}
-// 			for (let j = 0; i <= 2; j++) {
-// 				let ySum = 0;
-// 				ySum += grid[i][j];
-// 				if (ySum == playerSum) {
-// 					console.log(player, "wins | Vertical Line");
-// 					return;
-// 				}
-// 			}
-// 		}
-// 	playerSum -= 6;
-// 	}
-// 	return;
-// }
+const displayVictoryModal = (winner) => {
+	document.querySelector("#winner-modal").style.display = "block";
+	if (tieChecker) {
+		document.querySelector(".modal-content > p").innerHTML = "<h1>IT'S A TIE!</h1>"
+	}
+	document.querySelector(".modal-content > p").innerHTML = "<h1>" + winner + " WON</h1>"
+}
 
-// First move will be circle thus i set the class here for it to show up on site load
+const choosePlayer = (element) => {
+	gameStartModal.style.display = "none";
+	iconTurn.classList = element.target.id
+	if (element.target.id == "cross") {
+		icon = 1;
+	};
+}
+
 iconTurn.classList = "circle";
+document.querySelector(".modal-content > button").addEventListener("click", () => {
+	document.querySelector("#winner-modal").style.display = "none";
+})
+
+document.querySelector("#circle").addEventListener("click", choosePlayer);
+document.querySelector("#cross").addEventListener("click", choosePlayer);
