@@ -4,6 +4,26 @@ body {
     font-family: monospace;
 }
 
+button {
+    width:  64px;
+    height: 64px;
+    border: none; 
+}
+
+#cross:hover, #circle:hover {
+    cursor: pointer;
+}
+
+#cross {
+    background: url(../img/cross.png);
+    background-size: cover;
+}
+
+#circle {
+    background: url(../img/circle.png);
+    background-size: cover;
+}
+
 #turn-indicator {
     margin: auto;
     text-align: center;
@@ -59,12 +79,11 @@ body {
     text-align: center;
     margin: 10% auto;
     padding: 20px;
-    border: 1px solid #222;
-    background-color: #eee;
+    background-color: rgba(255, 255, 255, 0.4);
     width: 70%;
     color: #222;
-    border-radius: 5px;
-    box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.4);
+    border-radius: 64px;
+    box-shadow: 0px 10px 0px 10px rgba(0, 0, 0, 0.4);
 
 }
 
