@@ -10,8 +10,8 @@ button {
     border: none; 
 }
 
-#cross:hover, #circle:hover {
-    cursor: pointer;
+button:hover {
+    cursor: pointer
 }
 
 #cross {
@@ -21,6 +21,11 @@ button {
 
 #circle {
     background: url(../img/circle.png);
+    background-size: cover;
+}
+
+#replay {
+    background: url(../img/replay.png);
     background-size: cover;
 }
 
@@ -101,5 +106,5 @@ button {
 }
 
 .cross {
-    background: url(../img/cross.png)
+    background: url(../img/cross.png);
 }

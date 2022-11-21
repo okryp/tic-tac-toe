@@ -26,8 +26,6 @@ const checkSums = () => {
 		ySum = 0;
 		for (let i = j; i < grid.length; i+=3) {
 			ySum += grid[i];
-			console.log("ySUM:", i, ySum);
-
 			if (ySum == 3 || ySum == -3) {
 				return ySum;
 			}
@@ -38,8 +36,6 @@ const checkSums = () => {
 		xSum = 0;
 		for (let i = j; i < j+3; i++) {
 			xSum += grid[i];
-			console.log("xSUM: ", i, xSum);
-
 			if (xSum == 3 || xSum == -3) {
 				return xSum;
 			}
@@ -62,14 +58,12 @@ const updateGrid = () => {
 	 * Cross = -1
 	 */
 	tiles.forEach((element, index) => {
-		// console.log(element, index)
 		if (element.classList.contains("circle") && grid[index] == 0) {
 			grid[index] += 1;
 		} else if (element.classList.contains("cross") && grid[index] ==0) {
 			grid[index] -= 1;
 		} 
 	})
-	console.log("Current grid:\n", grid);
 }
 
 
@@ -83,7 +77,6 @@ const checkVictory = () => {
 		return;
 	}
 	tieChecker++;
-	console.log("tiechecker: ", tieChecker)
 	if (tieChecker == 9) {
 		displayVictoryModal();
 		return;
@@ -105,8 +98,6 @@ tiles.forEach((element, index) => {
 					checkVictory();
 					iconTurn.classList = "cross";
 					icon = 1;
-				} else {
-					console.log("contains char")
 				}
 				break;
 			case 1:
@@ -116,8 +107,6 @@ tiles.forEach((element, index) => {
 					checkVictory();
 					iconTurn.classList = "circle";
 					icon = 0;
-				} else {
-					console.log("contains char");
 				}
 				break;
 		}
@@ -155,9 +144,9 @@ const restartGame = () => {
 }
 
 turnIndicator.style.display = "none";
-document.querySelector(".modal-content > button").addEventListener("click", () => {
+document.querySelector("#replay").addEventListener("click", () => {
 	document.querySelector("#winner-modal").style.display = "none";
-	restartGame()
+	restartGame();
 })
 document.querySelector("#circle").addEventListener("click", choosePlayer);
 document.querySelector("#cross").addEventListener("click", choosePlayer);
