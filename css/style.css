@@ -108,3 +108,13 @@ button:hover {
 .cross {
     background: url(../img/cross.png);
 }
+
+/* visibility */
+
+.visible {
+    display: block;
+}
+
+.not-visible {
+    display: none;
+}

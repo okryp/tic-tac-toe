@@ -60,7 +60,7 @@ const updateGrid = () => {
 	tiles.forEach((element, index) => {
 		if (element.classList.contains("circle") && grid[index] == 0) {
 			grid[index] += 1;
-		} else if (element.classList.contains("cross") && grid[index] ==0) {
+		} else if (element.classList.contains("cross") && grid[index] == 0) {
 			grid[index] -= 1;
 		} 
 	})
@@ -85,30 +85,17 @@ const checkVictory = () => {
 
 tiles.forEach((element, index) => {
 	tiles[index].addEventListener("click", () => {
-		/** 			
-		 * 	Only allows to "click" on a tile if it's empty and doesn't contain the cross or circle class
-		 * 	This was the only way i could get it to not break the rules of the game.
-		 * 	More optimisation highly possible, looking into it in the future.
-		*/
-		switch(icon) {
-			case 0:
-				if (element.classList.contains("empty") || (!element.classList.contains("cross") && !element.classList.contains("circle"))) {
-					element.classList = "circle";
-					updateGrid();
-					checkVictory();
-					iconTurn.classList = "cross";
-					icon = 1;
-				}
-				break;
-			case 1:
-				if (element.classList.contains("empty") || (!element.classList.contains("cross") && !element.classList.contains("circle"))) {
-					element.classList = "cross";
-					updateGrid();
-					checkVictory();
-					iconTurn.classList = "circle";
-					icon = 0;
-				}
-				break;
+		/**
+		 * Ternary Operator added to remove switch case bloat.
+		 * Code looked over by teacher.
+		 */
+		
+		if (element.classList.contains("empty") || (!element.classList.contains("cross") && !element.classList.contains("circle"))) {
+			element.classList = (icon === 0) ? "circle" : "cross";
+			updateGrid();
+			checkVictory();
+			iconTurn.classList = (icon === 0) ? "cross" : "circle";
+			icon = (icon === 0) ? 1 : 0;
 		}
 	});
 }); 
@@ -127,7 +114,7 @@ const choosePlayer = (element) => {
 	iconTurn.classList = element.target.id
 	if (element.target.id == "cross") {
 		icon = 1;
-	};
+	}
 	turnIndicator.style.display = "block";
 }
 
@@ -150,3 +137,6 @@ document.querySelector("#replay").addEventListener("click", () => {
 })
 document.querySelector("#circle").addEventListener("click", choosePlayer);
 document.querySelector("#cross").addEventListener("click", choosePlayer);
+
+
+			// -=^-^=- FANCY MEOW CERTIFIED (Phoebe)
