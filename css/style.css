@@ -118,3 +118,16 @@ button:hover {
 .not-visible {
     display: none;
 }
+
+/*SCORE LABELS*/
+
+#wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 33%);
+    margin: auto;
+    width: fit-content;
+}
+
+#player-scores {
+    text-align: center;
+}

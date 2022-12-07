@@ -3,6 +3,10 @@ const iconTurn = document.querySelector("#icon");
 const turnIndicator = document.querySelector("#turn-indicator")
 const gameStartModal = document.querySelector("#game-start-modal");
 const modalParagraph = document.querySelector(".modal-content > p");
+
+const playerOneName = localStorage.getItem("playerOneName");
+const playerTwoName = localStorage.getItem("playerTwoName");
+
 /**
  * Used for the switch case.
  * Defines who's turn it is.

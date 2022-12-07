@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TIC-TAC-TOE</title>
+        <script defer src="./js/main.js"></script>
+        <link rel="stylesheet" href="./css/style.css">
+        <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="player-scores">
+                <h1>PLAYER SCORES</h1>
+                <p id="player-1-score"></p>
+                <p id="player-2-score"></p>
+            </div>
+            <div id="game-box">
+                <div id="turn-indicator">
+                    <p>Who's turn is it? :</p>
+                    <div id="icon"></div>
+                </div>
+                <div id="container">
+                    <div id="x0y0" class="empty"></div>
+                    <div id="x1y0" class="empty"></div>
+                    <div id="x2y0" class="empty"></div>
+                    <div id="x0y1" class="empty"></div>
+                    <div id="x1y1" class="empty"></div>
+                    <div id="x2y1" class="empty"></div>
+                    <div id="x0y2" class="empty"></div>
+                    <div id="x1y2" class="empty"></div>
+                    <div id="x2y2" class="empty"></div>
+                </div>    
+            </div>
+            <div id="winner-modal">
+                <div class="modal-content">
+                    <p></p>
+                    <button id="replay"></button>
+                </div>
+            </div>
+            <div id="game-start-modal">
+                <div class="modal-content">
+                    <p>PLAYER ONE PICK ICON:</p>
+                    <button id="circle"></button>
+                    <button id="cross"></button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
