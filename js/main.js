@@ -3,15 +3,22 @@ const iconTurn = document.querySelector("#icon");
 const turnIndicator = document.querySelector("#turn-indicator")
 const gameStartModal = document.querySelector("#game-start-modal");
 const modalParagraph = document.querySelector(".modal-content > p");
+const playerOneNameDisplay = document.querySelector("#player-1-name");
+const playerTwoNameDisplay = document.querySelector("#player-2-name");
+const playerOneScoreDisplay = document.querySelector("#player-1-points");
+const playerTwoScoreDisplay = document.querySelector("#player-2-points");
 
 const playerOneName = localStorage.getItem("playerOneName");
 const playerTwoName = localStorage.getItem("playerTwoName");
 
-/**
- * Used for the switch case.
- * Defines who's turn it is.
- */
-let icon = 0;
+// Player scores display functions
+playerOneNameDisplay.innerHTML = playerOneName;
+playerTwoNameDisplay.innerHTML = playerTwoName;
+
+let icon = 0;		// Used as check for who's turn it is.
+let playerOneChoice = 0;
+let crossScore = 0,
+	circleScore = 0;
 let tieChecker = 0;
 let winner = 0;
 let grid = [
@@ -70,14 +77,33 @@ const updateGrid = () => {
 	})
 }
 
+const updateScores = () => {
+	playerOneNameDisplay.classList = null;
+	playerTwoNameDisplay.classList = null;
+	if (playerOneChoice == 1) {
+		playerOneScoreDisplay.innerHTML = crossScore;
+		playerTwoScoreDisplay.innerHTML = circleScore;
+		playerOneNameDisplay.classList = "red";
+		playerTwoNameDisplay.classList = "blue";
+	} else {
+		playerOneScoreDisplay.innerHTML = circleScore;
+		playerTwoScoreDisplay.innerHTML = crossScore;
+		playerOneNameDisplay.classList = "blue";
+		playerTwoNameDisplay.classList = "red";	
+	}
+}
 
 const checkVictory = () => {
 	checkSums();
 	if (ySum == 3 || xSum == 3 || diagonalSumUD == 3 || diagonalSumDU == 3) {
 		displayVictoryModal("CIRCLE");
+		circleScore += 1;
+		updateScores();
 		return;
 	} else if (ySum == -3 || xSum == -3 || diagonalSumUD == -3 || diagonalSumDU == -3) {
 		displayVictoryModal("CROSS");
+		crossScore += 1;
+		updateScores();
 		return;
 	}
 	tieChecker++;
@@ -93,7 +119,6 @@ tiles.forEach((element, index) => {
 		 * Ternary Operator added to remove switch case bloat.
 		 * Code looked over by teacher.
 		 */
-		
 		if (element.classList.contains("empty") || (!element.classList.contains("cross") && !element.classList.contains("circle"))) {
 			element.classList = (icon === 0) ? "circle" : "cross";
 			updateGrid();
@@ -118,8 +143,10 @@ const choosePlayer = (element) => {
 	iconTurn.classList = element.target.id
 	if (element.target.id == "cross") {
 		icon = 1;
+		playerOneChoice = 1;
 	}
 	turnIndicator.style.display = "block";
+	updateScores();
 }
 
 const restartGame = () => {
@@ -134,6 +161,7 @@ const restartGame = () => {
 	tieChecker = 0;
 }
 
+// On load related
 turnIndicator.style.display = "none";
 document.querySelector("#replay").addEventListener("click", () => {
 	document.querySelector("#winner-modal").style.display = "none";

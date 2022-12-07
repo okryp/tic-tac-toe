@@ -14,6 +14,25 @@ button:hover {
     cursor: pointer
 }
 
+#wrapper {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(2, 33%);
+    margin: auto;
+    width: fit-content;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#game-box {
+    width: fit-content;
+    height: fit-content;
+    display: grid;
+    grid-template-rows: 2;
+    justify-items: center;
+}
+
 #cross {
     background: url(../img/cross.png);
     background-size: cover;
@@ -27,12 +46,6 @@ button:hover {
 #replay {
     background: url(../img/replay.png);
     background-size: cover;
-}
-
-#turn-indicator {
-    margin: auto;
-    text-align: center;
-    width: fit-content;
 }
 
 #icon {
@@ -121,13 +134,47 @@ button:hover {
 
 /*SCORE LABELS*/
 
-#wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 33%);
-    margin: auto;
-    width: fit-content;
+.blue {
+    color: #1923a5;
+}
+
+.red {
+    color: #a51c19
 }
 
 #player-scores {
+    display: grid;
+    grid-template-areas:
+    "title title"
+    "name1 points1"
+    "name2 points2" 
+    ;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+#player-scores > * {
+    display: table-cell;
+    line-height: 50%;
     text-align: center;
+    align-self: center;
+}
+
+#player-scores > h1 {
+    grid-area: title;
+}
+
+#player-1-name {
+    grid-area: name1;
+}
+
+#player-2-name {
+    grid-area: name2;
+}
+
+#player-1-score {
+    grid-area: points1;
+}
+
+#player-2-score {
+    grid-area: points2;
 }
