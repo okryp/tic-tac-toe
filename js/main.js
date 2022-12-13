@@ -31,6 +31,7 @@ let ySum = 0;
 let xSum = 0;
 let diagonalSumUD; //UP -> DOWN
 let diagonalSumDU; //DOWN -> UP
+
 const checkSums = () => {
 	// Checks for potential vertical victories
 	for (let j = 0; j < 3; j++) {
@@ -96,12 +97,12 @@ const updateScores = () => {
 const checkVictory = () => {
 	checkSums();
 	if (ySum == 3 || xSum == 3 || diagonalSumUD == 3 || diagonalSumDU == 3) {
-		displayVictoryModal("CIRCLE");
+		displayVictoryModal(playerOneName.toUpperCase());
 		circleScore += 1;
 		updateScores();
 		return;
 	} else if (ySum == -3 || xSum == -3 || diagonalSumUD == -3 || diagonalSumDU == -3) {
-		displayVictoryModal("CROSS");
+		displayVictoryModal(playerTwoName.toUpperCase());
 		crossScore += 1;
 		updateScores();
 		return;
