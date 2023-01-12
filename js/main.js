@@ -8,14 +8,14 @@ const playerTwoNameDisplay = document.querySelector("#player-2-name");
 const playerOneScoreDisplay = document.querySelector("#player-1-points");
 const playerTwoScoreDisplay = document.querySelector("#player-2-points");
 
-const playerOneName = localStorage.getItem("playerOneName");
-const playerTwoName = localStorage.getItem("playerTwoName");
-
+const playerOneName = localStorage.getItem("playerOneName") || 'PLAYER';
+const playerTwoName = localStorage.getItem("playerTwoName") || 'CPU';
+const gameState = localStorage.getItem('gameState')
 // Player scores display functions
 playerOneNameDisplay.innerHTML = playerOneName;
 playerTwoNameDisplay.innerHTML = playerTwoName;
 
-let icon = 0;		// Used as check for who's turn it is.
+let currentPlayer = -1;		// Used as check for who's turn it is.
 let playerOneChoice = 0;
 let crossScore = 0,
 	circleScore = 0;
@@ -36,8 +36,10 @@ const checkSums = () => {
 	// Checks for potential vertical victories
 	for (let j = 0; j < 3; j++) {
 		ySum = 0;
+		
 		for (let i = j; i < grid.length; i+=3) {
 			ySum += grid[i];
+			
 			if (ySum == 3 || ySum == -3) {
 				return ySum;
 			}
@@ -46,8 +48,10 @@ const checkSums = () => {
 	// Checks for potential horizontal victories
 	for (let j = 0; j < grid.length; j+=3) {
 		xSum = 0;
+		
 		for (let i = j; i < j+3; i++) {
 			xSum += grid[i];
+			
 			if (xSum == 3 || xSum == -3) {
 				return xSum;
 			}
@@ -56,6 +60,7 @@ const checkSums = () => {
 	// Checks for potential diagonal vicotories
 	diagonalSumUD = (grid[0] + grid[4] + grid[8]) //UP -> DOWN
 	diagonalSumDU = (grid[6] + grid[4] + grid[2]) //DOWN -> UP
+	
 	if (diagonalSumDU == 3 || diagonalSumUD == 3) {
 		return diagonalSumDU;
 	}
@@ -81,6 +86,7 @@ const updateGrid = () => {
 const updateScores = () => {
 	playerOneNameDisplay.classList = null;
 	playerTwoNameDisplay.classList = null;
+	
 	if (playerOneChoice == 1) {
 		playerOneScoreDisplay.innerHTML = crossScore;
 		playerTwoScoreDisplay.innerHTML = circleScore;
@@ -96,42 +102,29 @@ const updateScores = () => {
 
 const checkVictory = () => {
 	checkSums();
+	
 	if (ySum == 3 || xSum == 3 || diagonalSumUD == 3 || diagonalSumDU == 3) {
-		displayVictoryModal(playerOneName.toUpperCase());
+		displayVictoryModal((playerOneChoice === 0 ? playerOneName : playerTwoName).toUpperCase());
 		circleScore += 1;
 		updateScores();
 		return;
 	} else if (ySum == -3 || xSum == -3 || diagonalSumUD == -3 || diagonalSumDU == -3) {
-		displayVictoryModal(playerTwoName.toUpperCase());
+		displayVictoryModal((playerOneChoice === 0 ? playerTwoName : playerOneName).toUpperCase());
 		crossScore += 1;
 		updateScores();
 		return;
 	}
 	tieChecker++;
+	
 	if (tieChecker == 9) {
 		displayVictoryModal();
 		return;
 	}
 }
 
-tiles.forEach((element, index) => {
-	tiles[index].addEventListener("click", () => {
-		/**
-		 * Ternary Operator added to remove switch case bloat.
-		 * Code looked over by teacher.
-		 */
-		if (element.classList.contains("empty") || (!element.classList.contains("cross") && !element.classList.contains("circle"))) {
-			element.classList = (icon === 0) ? "circle" : "cross";
-			updateGrid();
-			checkVictory();
-			iconTurn.classList = (icon === 0) ? "cross" : "circle";
-			icon = (icon === 0) ? 1 : 0;
-		}
-	});
-}); 
-
 const displayVictoryModal = (winner) => {
 	document.querySelector("#winner-modal").style.display = "block";
+	
 	if (tieChecker == 9) {
 		document.querySelector(".modal-content > p").innerHTML = "<h1>IT'S A TIE!</h1>"
 		return;
@@ -142,8 +135,9 @@ const displayVictoryModal = (winner) => {
 const choosePlayer = (element) => {
 	gameStartModal.style.display = "none";
 	iconTurn.classList = element.target.id
+	
 	if (element.target.id == "cross") {
-		icon = 1;
+		currentPlayer = 1;
 		playerOneChoice = 1;
 	}
 	turnIndicator.style.display = "block";
@@ -162,6 +156,14 @@ const restartGame = () => {
 	tieChecker = 0;
 }
 
+const botTurn = () => {
+	generateBotTurn(currentPlayer);
+	updateGrid();
+	checkVictory();
+	iconTurn.classList = (currentPlayer === -1) ? 'circle' : 'cross';
+	currentPlayer = (currentPlayer === -1) ? 1 : -1;
+}
+
 // On load related
 turnIndicator.style.display = "none";
 document.querySelector("#replay").addEventListener("click", () => {
@@ -171,5 +173,23 @@ document.querySelector("#replay").addEventListener("click", () => {
 document.querySelector("#circle").addEventListener("click", choosePlayer);
 document.querySelector("#cross").addEventListener("click", choosePlayer);
 
+tiles.forEach((element, index) => {
+	tiles[index].addEventListener("click", () => {
+		/**
+		 * Ternary Operator added to remove switch case bloat.
+		 * Code looked over by teacher.
+		 */
+		if (element.classList.contains("empty") || (!element.classList.contains("cross") && !element.classList.contains("circle"))) {
+			element.classList = (currentPlayer === -1) ? "circle" : 'cross';
+			updateGrid();
+			checkVictory();
+			iconTurn.classList = (currentPlayer === -1) ? "cross" : "circle";
+			currentPlayer = (currentPlayer === -1) ? 1 : -1;
+			if (gameState == 'playerVersusComputer'){
+				botTurn();
+			}
+		}
+	});
+});
 
 			// -=^-^=- FANCY MEOW CERTIFIED (Phoebe)

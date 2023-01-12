@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>STARTPAGE</title>
     <script defer src="./js/local_storage.js"></script>
     <link rel="stylesheet" href="./css/start.css">
 </head>
@@ -13,16 +13,22 @@
         <form action="" method="get" class="name-input">
             <div class="name-input">
                 <label for="player-one">ENTER PLAYER ONE NAME: </label>
-                <input type="text" name="player-one" id="player-one" required>
+                <input type="text" name="player-one" id="player-one" required="required">
             </div>
             <div class="name-input">
                 <label for="player-two">ENTER PLAYER TWO NAME: </label>
-                <input type="text" name="player-two" id="player-two" required>
+                <input type="text" name="player-two" id="player-two" required="required">
             </div>
             <div class="name-input">
                 <input type="submit" value="Start game" id="submit-names">
             </div>
         </form>
+        <br>
+        <div>
+            <p>Alternatively, play against the CPU</p>
+            <p>!!!(UNDER DEVELOPMENT AND STILL NOT COMPLETELY FUNCTIONAL)!!!</p>
+            <button id="cpu-game-button">CPU Game</button>
+        </div>
     </div>
 </body>
 </html>
